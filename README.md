@@ -8,3 +8,7 @@
 - Less
 - React Router Dom
 - Axios
+
+## Usage
+- pnpm install
+- pnpm run dev
