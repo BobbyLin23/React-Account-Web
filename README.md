@@ -9,6 +9,9 @@
 - React Router Dom
 - Axios
 
-## Usage
-- pnpm install
-- pnpm run dev
+## Todo List
+
+- [ ] Add Route Guard
+- [ ] Fix Keyboard Input Bug
+- [ ] Add Update Avatar Feature
+- [ ] Deployment
