@@ -14,4 +14,5 @@
 - [ ] Add Route Guard
 - [ ] Fix Keyboard Input Bug
 - [ ] Add Update Avatar Feature
+- [ ] Add Echarts
 - [ ] Deployment

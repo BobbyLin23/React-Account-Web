@@ -57,9 +57,9 @@ const BillItem = ({ bill }: { bill: listProps }) => {
             title={
               <>
                 <CustomIcon
-                  iconName={item.type_id ? typeMap[item.type_id].icon : 'food'}
+                  type={item.type_id ? typeMap[item.type_id].icon : 'food'}
                 />
-                <span>{item.type_name}</span>
+                <span style={{ marginLeft: '10px' }}>{item.type_name}</span>
               </>
             }
           >

@@ -24,6 +24,11 @@ export interface listProps {
   date: string;
 }
 
+export interface RefProps {
+  show: () => void;
+  close: () => void;
+}
+
 function Home() {
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
@@ -36,9 +41,9 @@ function Home() {
   const [currentTime, setCurrentTime] = useState(dayjs().format('YYYY-MM'));
   const [currentSelect, setCurrentSelect] = useState<typeListProps>({ id: 0 });
 
-  const typeRef = useRef();
-  const monthRef = useRef();
-  const addRef = useRef();
+  const typeRef = useRef<RefProps>();
+  const monthRef = useRef<RefProps>();
+  const addRef = useRef<RefProps>();
 
   const toggle = () => {
     typeRef.current && typeRef.current.show();
@@ -129,7 +134,7 @@ function Home() {
       </div>
       <PopupType onSelect={select} ref={typeRef} />
       <PopupDate onSelect={selectMonth} ref={monthRef} mode="month" />
-      <PopupAddBill ref={addRef} onReload={loadMore} />
+      <PopupAddBill ref={addRef} onReload={loadMore} detail={undefined} />
       <div className={style.add} onClick={addBill}>
         <AddOutline />
       </div>

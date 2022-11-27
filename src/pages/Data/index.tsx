@@ -8,6 +8,7 @@ import CustomIcon from '@/components/CustomIcon';
 import { typeMap } from '@/utils';
 import { ProgressBar } from 'antd-mobile';
 import request from '@/utils/request';
+import { RefProps } from '../Home';
 
 let proportionChart: any = null;
 
@@ -25,7 +26,7 @@ function Data() {
   const [expenseData, setExpenseData] = useState<totalDataProps[]>([]);
   const [incomeData, setIncomeData] = useState<totalDataProps[]>([]);
 
-  const monthRef = useRef();
+  const monthRef = useRef<RefProps>();
   const [currentMonth, setCurrentMonth] = useState(dayjs().format('YYYY-MM'));
 
   const [pieType, setPieType] = useState('expense');
@@ -44,15 +45,14 @@ function Data() {
 
   const getData = async () => {
     const { data } = await request.get(`/bill/data?date=${currentMonth}`);
-    console.log(data);
     setTotalExpense(data.total_expense);
     setTotalIncome(data.total_income);
     const expense_data = (data.total_data as totalDataProps[])
-      .filter((item) => item.pay_type === 1)
+      .filter((item) => Number(item.pay_type) === 1)
       .sort((a, b) => b.number - a.number);
 
     const income_data = (data.total_data as totalDataProps[])
-      .filter((item) => item.pay_type === 2)
+      .filter((item) => Number(item.pay_type) === 2)
       .sort((a, b) => b.number - a.number);
     setExpenseData(expense_data);
     setIncomeData(income_data);
@@ -72,39 +72,39 @@ function Data() {
   }, [currentMonth]);
 
   const setPieChart = (data: totalDataProps[]) => {
-    if (window.echarts) {
-      proportionChart = echarts.init(document.getElementById('proportion'));
-      proportionChart.setOption({
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)',
-        },
-        // 图例
-        legend: {
-          data: data.map((item) => item.type_name),
-        },
-        series: [
-          {
-            name: '支出',
-            type: 'pie',
-            radius: '55%',
-            data: data.map((item) => {
-              return {
-                value: item.number,
-                name: item.type_name,
-              };
-            }),
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)',
-              },
-            },
-          },
-        ],
-      });
-    }
+    // if (window.echarts) {
+    //   proportionChart = echarts.init(document.getElementById('proportion'));
+    //   proportionChart.setOption({
+    //     tooltip: {
+    //       trigger: 'item',
+    //       formatter: '{a} <br/>{b} : {c} ({d}%)',
+    //     },
+    //     // 图例
+    //     legend: {
+    //       data: data.map((item) => item.type_name),
+    //     },
+    //     series: [
+    //       {
+    //         name: '支出',
+    //         type: 'pie',
+    //         radius: '55%',
+    //         data: data.map((item) => {
+    //           return {
+    //             value: item.number,
+    //             name: item.type_name,
+    //           };
+    //         }),
+    //         emphasis: {
+    //           itemStyle: {
+    //             shadowBlur: 10,
+    //             shadowOffsetX: 0,
+    //             shadowColor: 'rgba(0, 0, 0, 0.5)',
+    //           },
+    //         },
+    //       },
+    //     ],
+    //   });
+    // }
   };
 
   return (

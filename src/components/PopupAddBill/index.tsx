@@ -59,7 +59,7 @@ const PopupAddBill = forwardRef(
         });
         return;
       }
-      const params = {
+      const params: any = {
         amount: Number(amount).toFixed(2),
         type_id: currentType.id,
         type_name: currentType.name,

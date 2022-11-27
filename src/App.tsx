@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import router from './router';
 import './App.css';
@@ -9,9 +9,14 @@ function App() {
   const location = useLocation();
   const { pathname } = location;
   const needNav = ['/', '/data', '/user'];
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
     setShowNav(needNav.includes(pathname));
+    if (!token) {
+      navigate('/login');
+    }
   }, [pathname]);
 
   return (

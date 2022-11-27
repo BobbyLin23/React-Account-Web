@@ -9,6 +9,7 @@ import CustomIcon from '@/components/CustomIcon';
 import dayjs from 'dayjs';
 import { typeMap } from '@/utils';
 import PopupAddBill from '@/components/PopupAddBill';
+import { RefProps } from '../Home';
 
 export interface detailProps {
   id: number;
@@ -37,7 +38,7 @@ const Detail = () => {
     user_id: 0,
   });
 
-  const addRef = useRef();
+  const addRef = useRef<RefProps>();
 
   const getDetail = async () => {
     const { data } = await request.get(`/bill/detail?id=${id}`);
