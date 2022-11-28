@@ -1,5 +1,5 @@
 import { fetchUserInfo } from '@/api/user';
-import { List } from 'antd-mobile';
+import { Button, List } from 'antd-mobile';
 import {
   EditSOutline,
   InformationCircleOutline,
@@ -30,6 +30,11 @@ function User() {
     const { data } = await fetchUserInfo();
     console.log(data.userinfo);
     setUser(data.userinfo);
+  };
+
+  const logOut = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -75,6 +80,9 @@ function User() {
           </List.Item>
         </List>
       </div>
+      <Button className={style.logout} block color="primary" onClick={logOut}>
+        Log Out
+      </Button>
     </div>
   );
 }
