@@ -1,6 +1,6 @@
-import { createProxyMiddleware } from 'http-proxy-middleware';
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = (req: any, res: any) => {
+module.exports = (req, res) => {
   let target = '';
   if (req.url.startWith('/api')) {
     target = 'https://react-account-server-production.up.railway.app/';
@@ -11,5 +11,5 @@ module.exports = (req: any, res: any) => {
     pathRewrite: {
       '^/api/': '/',
     },
-  });
+  })(req, res);
 };
