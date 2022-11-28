@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import { fetchUserInfo } from '@/api/user';
 import { List } from 'antd-mobile';
 import {
   EditSOutline,
@@ -27,7 +27,7 @@ function User() {
   const navigate = useNavigate();
 
   const getUserInfo = async () => {
-    const { data } = await request.get('/user/get_userinfo');
+    const { data } = await fetchUserInfo();
     console.log(data.userinfo);
     setUser(data.userinfo);
   };

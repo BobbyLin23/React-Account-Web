@@ -3,11 +3,11 @@ import { AddOutline, DownOutline } from 'antd-mobile-icons';
 import { useEffect, useRef, useState } from 'react';
 import BillItem from '@/components/BillItem';
 import { InfiniteScroll } from 'antd-mobile';
-import request from '@/utils/request';
 import dayjs from 'dayjs';
 import PopupType, { typeListProps } from '@/components/PopupType';
 import PopupDate from '@/components/PopupDate';
 import PopupAddBill from '@/components/PopupAddBill';
+import { getBill } from '@/api/bill';
 
 export interface billProps {
   amount: string;
@@ -65,11 +65,7 @@ function Home() {
   };
 
   const getBillList = async () => {
-    const { data } = await request.get(
-      `/bill/list?page=${page}&page_size=5&date=${currentTime}&type_id=${
-        currentSelect.id || 0
-      }`
-    );
+    const { data } = await getBill(page, currentTime, currentSelect.id);
     if (!data) return;
     if (page === 1) {
       setList(data.list);

@@ -1,5 +1,4 @@
 import Header from '@/components/Header';
-import request from '@/utils/request';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import style from './style.module.less';
@@ -10,6 +9,7 @@ import dayjs from 'dayjs';
 import { typeMap } from '@/utils';
 import PopupAddBill from '@/components/PopupAddBill';
 import { RefProps } from '../Home';
+import { getBillDetail } from '@/api/bill';
 
 export interface detailProps {
   id: number;
@@ -41,7 +41,7 @@ const Detail = () => {
   const addRef = useRef<RefProps>();
 
   const getDetail = async () => {
-    const { data } = await request.get(`/bill/detail?id=${id}`);
+    const { data } = await getBillDetail(id);
     setDetail(data.detail[0]);
     console.log(data.detail[0]);
   };

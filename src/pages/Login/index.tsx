@@ -3,7 +3,7 @@ import cx from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Form, Input, Toast } from 'antd-mobile';
 import type { ToastHandler } from 'antd-mobile/es/components/toast';
-import request from '@/utils/request';
+import { getCaptchaImg, login, register } from '@/api/user';
 
 function Login() {
   const handler = useRef<ToastHandler>();
@@ -27,7 +27,7 @@ function Login() {
       return;
     }
     if (type === 'login') {
-      const res = await request.post('/user/login', { username, password });
+      const res = await login(username, password);
       localStorage.setItem('token', 'Bearer ' + res.data.token);
       window.location.href = '/';
     } else {
@@ -46,12 +46,9 @@ function Login() {
         getCaptcha();
         return;
       }
-      request
-        .post('/user/register', {
-          username,
-          password,
-        })
-        .then((res) => {
+
+      register(username, password)
+        .then(() => {
           setType('login');
           Toast.show({
             content: 'Register Success',
@@ -68,8 +65,7 @@ function Login() {
   };
 
   const getCaptcha = () => {
-    request
-      .get('/user/captcha')
+    getCaptchaImg()
       .then((res) => {
         setImgUrl(res.data.img);
         localStorage.setItem('res', res.data.data);

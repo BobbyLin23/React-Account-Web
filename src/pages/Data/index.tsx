@@ -7,8 +7,8 @@ import cx from 'classnames';
 import CustomIcon from '@/components/CustomIcon';
 import { typeMap } from '@/utils';
 import { ProgressBar } from 'antd-mobile';
-import request from '@/utils/request';
 import { RefProps } from '../Home';
+import { getBillByDate } from '@/api/bill';
 
 let proportionChart: any = null;
 
@@ -44,7 +44,7 @@ function Data() {
   };
 
   const getData = async () => {
-    const { data } = await request.get(`/bill/data?date=${currentMonth}`);
+    const { data } = await getBillByDate(currentMonth);
     setTotalExpense(data.total_expense);
     setTotalIncome(data.total_income);
     const expense_data = (data.total_data as totalDataProps[])
